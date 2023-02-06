@@ -1,5 +1,25 @@
 {
-  "dependencies": {
-    "webpack": "^5.75.0"
+  "name": "reverse-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bohdan-ryzhko/reverse-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bohdan-ryzhko/reverse-timer/issues"
+  },
+  "homepage": "https://github.com/bohdan-ryzhko/reverse-timer#readme",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
