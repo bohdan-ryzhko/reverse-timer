@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix';
 import "./css/style.scss";
 
 const inputTime = document.querySelector('#datetime-picker')
