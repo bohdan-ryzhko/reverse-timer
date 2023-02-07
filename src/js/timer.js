@@ -19,6 +19,7 @@ class Timer {
 		this.isActive = true;
 
 		this.timerId = setInterval(() => {
+
 			const timeNow = Date.now();
 			const countDays = this.addLeadingZero(this.convertMs(timeNow - selectedTime).days  * (-1) - 1);
 			const countHours = this.addLeadingZero(this.convertMs(timeNow - selectedTime).hours  * (-1) - 1);
@@ -40,11 +41,12 @@ class Timer {
 	}
 
 	stop() {
-		if (this.isActive) {
-			this.isActive = false;
-			clearInterval(this.timerId);
+		if (!this.isActive) {
+			return;
 		}
-		return;
+
+		this.isActive = true;
+		clearInterval(this.timerId);
 	}
 
 	reset() {

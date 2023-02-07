@@ -24,8 +24,10 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './src/index.html',
+			inject: 'body'
 		}),
-		new MiniCssExtractPlugin()
+		new MiniCssExtractPlugin({
+		})
 	],
 	devServer: {
 		port: 3031,
