@@ -1,6 +1,9 @@
+import { Notify } from 'notiflix';
+
 class Timer {
-	constructor(timerContainer, timerPicker) {
+	constructor(timerContainer, circle, timerPicker) {
 		this.timerContainer = document.querySelector(`${timerContainer}`);
+		this.circle = document.querySelector(`${circle}`);
 		this.timerPicker = timerPicker;
 		this.amountDaysRef = this.timerContainer.querySelector('[data-days]');
 		this.amountHoursRef = this.timerContainer.querySelector('[data-hours]');
@@ -11,16 +14,24 @@ class Timer {
 	}
 
 	start() {
-		if (this.isActive) {
+		if (this.isActive || this.timerPicker.latestSelectedDateObj < Date.now()) {
+			Notify.failure('Please choose a date in the future')
 			return;
 		}
 
 		const selectedTime = this.timerPicker.latestSelectedDateObj;
 		this.isActive = true;
+		const fullTime = selectedTime - Date.now();
 
+		const radius = this.circle.r.baseVal.value;
+		const circumference = 2 * Math.PI * radius;
+		
 		this.timerId = setInterval(() => {
-
 			const timeNow = Date.now();
+			const percent = (selectedTime - timeNow) * 100 / fullTime;
+
+			this.circle.style.strokeDashoffset = `${circumference - this.setProgress(percent, circumference)}`;
+
 			const countDays = this.addLeadingZero(this.convertMs(timeNow - selectedTime).days  * (-1) - 1);
 			const countHours = this.addLeadingZero(this.convertMs(timeNow - selectedTime).hours  * (-1) - 1);
 			const countMins = this.addLeadingZero(this.convertMs(timeNow - selectedTime).minutes  * (-1) - 1);
@@ -45,7 +56,9 @@ class Timer {
 			return;
 		}
 
-		this.isActive = true;
+		Notify.info('Time is over!')
+		this.circle.style.strokeDashoffset = 0;
+		this.isActive = false;
 		clearInterval(this.timerId);
 	}
 
@@ -62,6 +75,10 @@ class Timer {
 
 	addLeadingZero(value) {
 		return String(value).padStart(2, '0');
+	}
+
+	setProgress(percent, circumference) {
+		return percent * circumference / 100;
 	}
 
 	convertMs(ms) {
