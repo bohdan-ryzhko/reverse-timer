@@ -1,3 +1,6 @@
 import "./css/style.scss";
 
-console.log('nfwfnuw');
+const inputTime = document.querySelector('#datetime-picker')
+import flatpickr from "flatpickr";
+
+flatpickr(inputTime);
